@@ -36,7 +36,6 @@ class DeliveryTime {
       );
 
       this.times = data;
-      console.log('UPDATED');
 
       // SCHEDULE THE NEXT UPDATE
       setTimeout(() => {

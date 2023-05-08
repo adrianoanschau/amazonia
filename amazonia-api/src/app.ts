@@ -1,4 +1,6 @@
-import express, { Application, json } from 'express';
+import express, { Application } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 import packageJson from '../package.json';
 
 class App {
@@ -15,17 +17,27 @@ class App {
     this.root();
   }
 
-  private get appNameAndVersion() {
-    return `${this.appName} :: v${this.appVersion}`;
-  }
-
   private middlewares() {
-    this.application.use(json());
+    this.application.use(
+      cors({
+        origin: '*',
+        allowedHeaders: ['Accept', 'Content-Type'],
+        methods: ['GET'],
+      })
+    );
+
+    this.application.use(
+      bodyParser.urlencoded({
+        extended: false,
+      })
+    );
+
+    this.application.use(bodyParser.json());
   }
 
   private root() {
     this.application.get('/', (req, res) => {
-      res.send(this.appNameAndVersion);
+      res.send({ name: this.appName, version: `v${this.appVersion}` });
     });
   }
 
