@@ -3,6 +3,4 @@ build
 
 .env
 .github
-.husky
 .coverage
-post-clone-scripts
