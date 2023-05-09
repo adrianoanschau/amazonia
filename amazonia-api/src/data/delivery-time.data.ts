@@ -46,13 +46,15 @@ export class DeliveryTimeData {
     }
   }
 
-  getDeliveryTime(from: string, to: string) {
-    if (this.times[from] === undefined)
-      throw new Error(`Don't exists location: ${from}`);
+  greaterThan(left: string, right: string) {
+    const leftSum = 'ABCDEFGH'.indexOf(left[0]) + '12345678'.indexOf(left[1]);
+    const rightSum =
+      'ABCDEFGH'.indexOf(right[0]) + '12345678'.indexOf(right[1]);
 
-    if (this.times[from][to] === undefined)
-      throw new Error(`Don't move ${from} to ${to}`);
+    return leftSum > rightSum;
+  }
 
-    return this.times[from][to];
+  getMap() {
+    return this.times;
   }
 }
