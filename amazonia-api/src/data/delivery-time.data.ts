@@ -2,7 +2,7 @@ import { HttpClient } from '../core/http-client';
 
 type TimesData = Record<string, Record<string, number>>;
 
-class DeliveryTimeData {
+export class DeliveryTimeData {
   /* STORE DELIVERY TIMES DATA REFERENCE */
   private times: TimesData = {};
 
@@ -56,7 +56,3 @@ class DeliveryTimeData {
     return this.times[from][to];
   }
 }
-
-export const deliveryTimeData = new DeliveryTimeData(
-  new HttpClient(process.env.DELIVERY_TIMES_API)
-);

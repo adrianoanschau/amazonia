@@ -3,7 +3,7 @@ import { Router } from '../core/interfaces/router';
 import { deliveryTimeSchema } from '../validation/delivery-time.schema';
 import { DeliveryTimeService } from '../services/delivery-time.service';
 
-class DeliveryTimeRouter implements Router {
+export class DeliveryTimeRouter implements Router {
   constructor(private readonly service: DeliveryTimeService) {}
 
   init(application: Application) {
@@ -15,7 +15,3 @@ class DeliveryTimeRouter implements Router {
     });
   }
 }
-
-export const deliveryTimeRouter = new DeliveryTimeRouter(
-  new DeliveryTimeService()
-);
