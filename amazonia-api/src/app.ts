@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import packageJson from '../package.json';
+import { Router } from './core/interfaces/router';
 
 class App {
   private appName: string;
@@ -14,7 +15,7 @@ class App {
     this.application = express();
 
     this.middlewares();
-    this.root();
+    this.routes();
   }
 
   private middlewares() {
@@ -35,10 +36,14 @@ class App {
     this.application.use(bodyParser.json());
   }
 
-  private root() {
+  private routes() {
     this.application.get('/', (req, res) => {
-      res.send({ name: this.appName, version: `v${this.appVersion}` });
+      res.json({ name: this.appName, version: `v${this.appVersion}` });
     });
+  }
+
+  registerRouter(router: Router) {
+    router.init(this.application);
   }
 
   listen(port: number, host: string, callback?: (() => void) | undefined) {
