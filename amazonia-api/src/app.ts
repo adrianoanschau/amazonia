@@ -27,6 +27,10 @@ export class App {
     return this.#appVersion;
   }
 
+  get application() {
+    return this.#application;
+  }
+
   beforeInit(beforeInit: () => Promise<void>) {
     this.#beforeInitFunction = beforeInit;
   }
