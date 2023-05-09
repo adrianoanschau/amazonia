@@ -2,3 +2,7 @@ node_modules
 build
 
 .env
+.github
+.husky
+.coverage
+post-clone-scripts

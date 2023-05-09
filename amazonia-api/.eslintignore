@@ -2,3 +2,5 @@ node_modules
 build
 *.local
 node_modules/*
+test
+tests

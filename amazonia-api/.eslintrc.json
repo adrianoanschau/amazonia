@@ -6,7 +6,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:editorconfig/all"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
@@ -15,7 +16,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "simple-import-sort", "prettier"],
+  "plugins": ["@typescript-eslint", "simple-import-sort", "prettier", "editorconfig"],
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
     "import/extensions": "off",
