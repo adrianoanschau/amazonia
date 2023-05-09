@@ -15,7 +15,7 @@ const deliveryTimeRouter = new DeliveryTimeRouter(
   new DeliveryTimeService(deliveryTimeData)
 );
 
-app.registerRouter(deliveryTimeRouter);
+app.registerRouter(deliveryTimeRouter.getRouter());
 
 app.listen(PORT, HOST, async () => {
   console.log(`Running on http://${HOST}:${PORT}`);

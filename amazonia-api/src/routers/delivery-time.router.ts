@@ -1,17 +1,20 @@
-import { Application } from 'express';
-import { Router } from '../core/interfaces/router';
+import { Router } from 'express';
 import { deliveryTimeSchema } from '../validation/delivery-time.schema';
 import { DeliveryTimeService } from '../services/delivery-time.service';
 
-export class DeliveryTimeRouter implements Router {
+export class DeliveryTimeRouter {
   constructor(private readonly service: DeliveryTimeService) {}
 
-  init(application: Application) {
-    application.get('/delivery-time', (req, res) => {
+  getRouter() {
+    const router = Router();
+
+    router.get('/delivery-time', (req, res) => {
       const { error, value } = deliveryTimeSchema.validate(req.query);
       if (error) throw new Error('Invalid data');
 
       res.json(this.service.calculate(value));
     });
+
+    return router;
   }
 }

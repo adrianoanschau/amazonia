@@ -1,8 +1,7 @@
-import express, { Application } from 'express';
+import express, { Application, Router } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import packageJson from '../package.json';
-import { Router } from './core/interfaces/router';
 
 class App {
   private appName: string;
@@ -43,7 +42,7 @@ class App {
   }
 
   registerRouter(router: Router) {
-    router.init(this.application);
+    this.application.use(router);
   }
 
   listen(port: number, host: string, callback?: (() => void) | undefined) {
