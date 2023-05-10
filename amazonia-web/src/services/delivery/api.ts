@@ -21,7 +21,7 @@ class DeliveryApi {
 
   constructor() {
     this.#axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_DELIVERY_API,
+      baseURL: '/api',
     });
   }
 
