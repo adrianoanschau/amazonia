@@ -31,9 +31,10 @@ export class DeliveryTimeData {
 
   private async refresh() {
     try {
-      const { data } = await this.httpClient.get(
-        '/10404696-fd43-4481-a7ed-f9369073252f'
-      );
+      const route = process.env.DELIVERY_TIMES_MAP_ROUTE;
+      if (!route) throw Error;
+
+      const { data } = await this.httpClient.get(route);
 
       this.times = data;
 

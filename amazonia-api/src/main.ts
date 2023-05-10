@@ -5,7 +5,7 @@ import { DeliveryTimeData } from './data/delivery-time.data';
 import { DeliveryTimeRouter } from './routers/delivery-time.router';
 import { DeliveryTimeService } from './services/delivery-time.service';
 
-const main = function (app: App) {
+const main = async function (app: App) {
   const deliveryTimeData = new DeliveryTimeData(
     new HttpClient(process.env.DELIVERY_TIMES_API)
   );
@@ -20,14 +20,11 @@ const main = function (app: App) {
     res.json({ name: app.appName, version: `v${app.appVersion}` });
   });
 
-  app.registerRouter(rootRouter);
-  app.registerRouter(deliveryTimeRouter.getRouter());
+  app.registerRouters([rootRouter, deliveryTimeRouter.getRouter()]);
 
-  app.beforeInit(async () => {
-    await deliveryTimeData.init();
-  });
+  await deliveryTimeData.init();
 
   return app;
 };
 
-export default main(new App());
+export default main;

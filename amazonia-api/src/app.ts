@@ -1,4 +1,10 @@
-import express, { Application, Router } from 'express';
+import express, {
+  Application,
+  Router,
+  Request,
+  Response,
+  NextFunction,
+} from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import packageJson from '../package.json';
@@ -7,7 +13,6 @@ export class App {
   #appName: string;
   #appVersion: string;
   #application: Application;
-  #beforeInitFunction: () => Promise<void>;
 
   constructor() {
     this.#appName = process.env.APP_NAME || 'App';
@@ -15,8 +20,6 @@ export class App {
     this.#application = express();
 
     this.middlewares();
-
-    this.#beforeInitFunction = async () => {};
   }
 
   get appName() {
@@ -31,8 +34,13 @@ export class App {
     return this.#application;
   }
 
-  beforeInit(beforeInit: () => Promise<void>) {
-    this.#beforeInitFunction = beforeInit;
+  private errorHandler(
+    error: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    return res.status(500).json({ message: error.message });
   }
 
   private middlewares() {
@@ -53,15 +61,15 @@ export class App {
     this.#application.use(bodyParser.json());
   }
 
-  registerRouter(router: Router) {
-    this.#application.use(router);
+  registerRouters(routers: Array<Router>) {
+    this.#application.use(...routers);
+    // @ts-ignore
+    this.#application.use(this.errorHandler);
   }
 
-  listen(port: number, host: string, callback = () => {}) {
+  async listen(port: number, host: string, callback = () => {}) {
     this.#application.listen(port, host, async () => {
       try {
-        await this.#beforeInitFunction();
-
         callback();
       } catch (error) {
         throw new Error("API can't init");
