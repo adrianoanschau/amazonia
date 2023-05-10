@@ -2,7 +2,6 @@ import {
   Container,
   CssBaseline,
   Divider,
-  LinearProgress,
   Stack,
   ThemeProvider,
   styled,
@@ -10,10 +9,7 @@ import {
 import theme from './theme/default';
 import { CalculateDroneRoutes } from './calculate-drone-routes';
 import { AppInfo } from './app-info';
-import {
-  useServiceAvailableContext,
-  withServiceAvailableContext,
-} from './app-info/context';
+import { withServiceAvailableContext } from './app-info/context';
 
 const StyledContainer = styled(Container)({
   display: 'flex',
@@ -24,14 +20,11 @@ const StyledContainer = styled(Container)({
 });
 
 function AppComponent() {
-  const { loading } = useServiceAvailableContext();
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {loading && <LinearProgress />}
       <StyledContainer maxWidth="sm">
-        <Stack sx={{ gap: 2 }}>
+        <Stack sx={{ gap: 2, my: 8 }}>
           <CalculateDroneRoutes />
           <Divider sx={{ borderColor: theme.palette.grey[700] }} />
           <AppInfo />

@@ -5,6 +5,10 @@ import {
   Autocomplete,
   Stack,
   Button,
+  Divider,
+  Alert,
+  LinearProgress,
+  CircularProgress,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useCalculatorContext } from './context';
@@ -48,43 +52,74 @@ const SelectLocationField = styled(
 )();
 
 export function CalculatorForm() {
-  const { available } = useServiceAvailableContext();
-  const { formData, setFormData, onSubmit } = useCalculatorContext();
+  const { loading, available } = useServiceAvailableContext();
+  const { formData, deliveryTime, setFormData, onSubmit } =
+    useCalculatorContext();
 
   return (
-    <Box sx={{ display: 'flex', gap: 3 }}>
-      <Stack sx={{ flex: 3, gap: 1 }}>
-        <SelectLocationField
-          label="Drone start"
-          value={formData.droneStart ?? ''}
-          onChange={(value) => setFormData('droneStart', value)}
-          disabled={!available}
+    <Box sx={{ position: 'relative' }}>
+      {!loading && !available && (
+        <>
+          <Alert
+            severity="error"
+            sx={{ border: '1px solid', borderColor: 'error.light' }}
+          >
+            Service unavailable
+          </Alert>
+          <Divider sx={{ my: 2 }} />
+        </>
+      )}
+      {loading && (
+        <LinearProgress
+          sx={{ position: 'absolute', width: '100%', top: -20 }}
         />
-        <SelectLocationField
-          label="Object pick-up"
-          value={formData.objectPickUp ?? ''}
-          onChange={(value) => setFormData('objectPickUp', value)}
-          disabled={!available}
-        />
-        <SelectLocationField
-          label="Delivery destination"
-          value={formData.deliveryDestination ?? ''}
-          onChange={(value) => setFormData('deliveryDestination', value)}
-          disabled={!available}
-        />
-      </Stack>
-      <Stack sx={{ flex: 2, justifyContent: 'flex-end' }}>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{ lineHeight: 1.3 }}
-          onClick={() => onSubmit()}
-          disabled={!available}
-        >
-          Calculate <br />
-          fastest route!
-        </Button>
-      </Stack>
+      )}
+      <Box sx={{ display: 'flex', gap: 3 }}>
+        <Stack sx={{ flex: 3, gap: 1 }}>
+          <SelectLocationField
+            label="Drone start"
+            value={formData.droneStart ?? ''}
+            onChange={(value) => setFormData('droneStart', value)}
+            disabled={!available}
+          />
+          <SelectLocationField
+            label="Object pick-up"
+            value={formData.objectPickUp ?? ''}
+            onChange={(value) => setFormData('objectPickUp', value)}
+            disabled={!available}
+          />
+          <SelectLocationField
+            label="Delivery destination"
+            value={formData.deliveryDestination ?? ''}
+            onChange={(value) => setFormData('deliveryDestination', value)}
+            disabled={!available}
+          />
+        </Stack>
+        <Stack sx={{ flex: 2, justifyContent: 'flex-end' }}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ lineHeight: 1.3 }}
+            onClick={() => onSubmit()}
+            disabled={!available || deliveryTime.loading}
+          >
+            Calculate <br />
+            fastest route!
+            {deliveryTime.loading && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+          </Button>
+        </Stack>
+      </Box>
     </Box>
   );
 }
