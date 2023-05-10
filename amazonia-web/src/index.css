@@ -22,6 +22,7 @@ body {
 
 #root {
   margin: 0 auto;
+  min-width: 320px;
   width: 100vw;
   z-index: 1;
 }
