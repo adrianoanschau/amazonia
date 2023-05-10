@@ -3,18 +3,20 @@ import { deliveryTimeSchema } from '../validation/delivery-time.schema';
 import { DeliveryTimeService } from '../services/delivery-time.service';
 
 export class DeliveryTimeRouter {
-  constructor(private readonly service: DeliveryTimeService) {}
+  #router: Router;
 
-  getRouter() {
-    const router = Router();
+  constructor(private readonly service: DeliveryTimeService) {
+    this.#router = Router();
 
-    router.get('/delivery-time', (req, res) => {
+    this.#router.get('/delivery-time', (req, res) => {
       const { error, value } = deliveryTimeSchema.validate(req.query);
       if (error) throw new Error('Invalid data');
 
       res.json(this.service.getBetterRoute(value));
     });
+  }
 
-    return router;
+  getRouter() {
+    return this.#router;
   }
 }

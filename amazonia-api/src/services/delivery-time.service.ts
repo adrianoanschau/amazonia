@@ -42,11 +42,8 @@ export class DeliveryTimeService {
     }
 
     const result = this.findShortestPath(start, destiny);
-    if (!result) {
-      throw new Error(`Not found a route!`);
-    }
 
-    const { path, cost } = result;
+    const { path, cost } = result!;
 
     return { path: !startIsGreaterThanDestiny ? path : path.reverse(), cost };
   }
