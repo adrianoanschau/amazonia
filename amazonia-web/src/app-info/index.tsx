@@ -26,6 +26,7 @@ const AppInfoLabel = styled(
 )();
 
 export function AppInfo() {
+  const theme = useTheme();
   const [{ data, loading, error }] = useAppInfo();
   const { setAvailable, setLoading } = useServiceAvailableContext();
 
@@ -35,7 +36,20 @@ export function AppInfo() {
   }, [loading, error, setAvailable, setLoading]);
 
   return (
-    <Box display="flex" justifyContent="space-between" alignItems="center">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: 2,
+        mb: 3,
+        [theme.breakpoints.up('sm')]: {
+          flexDirection: 'row',
+          mb: 0,
+        },
+      }}
+    >
       <Box>
         <figure style={{ width: 100, margin: 0 }}>
           <img src="/logo-white.png" style={{ maxWidth: '100%' }} />

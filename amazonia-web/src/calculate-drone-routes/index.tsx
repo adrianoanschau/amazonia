@@ -1,8 +1,15 @@
-import { Divider, Paper, Typography, TypographyProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Divider,
+  Paper,
+  Typography,
+  TypographyProps,
+  useMediaQuery,
+} from '@mui/material';
+import { useEffect } from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import { CalculatorWrapper } from './calculator-wrapper';
 import { useCalculatorContext, withCalculatorContext } from './context';
-import { PropsWithChildren, useEffect } from 'react';
 
 const Container = styled(Paper)(({ theme }) => ({
   position: 'relative',
@@ -37,19 +44,28 @@ const Title = styled(
   ),
 )<TypographyProps>();
 
-const Drone = styled(() => (
-  <figure
-    style={{
-      width: 220,
-      margin: 0,
-      position: 'absolute',
-      top: -30,
-      right: 10,
-    }}
-  >
-    <img src="/drone.png" style={{ maxWidth: '100%' }} />
-  </figure>
-))();
+const Drone = styled(() => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      component="figure"
+      sx={{
+        position: 'absolute',
+        top: 18,
+        right: 10,
+        width: 100,
+        margin: 0,
+        [theme.breakpoints.up('sm')]: {
+          width: 220,
+          top: -30,
+        },
+      }}
+    >
+      <Box component="img" src="/drone.png" sx={{ maxWidth: '100%' }} />
+    </Box>
+  );
+})();
 
 function CalculateDroneRoutesComponent() {
   const { formData } = useCalculatorContext();
@@ -60,11 +76,11 @@ function CalculateDroneRoutesComponent() {
 
   return (
     <Container>
+      <Drone />
       <Title title="Amazonia Drone Router" subtitle="by Ateliware" />
       <Wrapper>
         <CalculatorWrapper />
       </Wrapper>
-      <Drone />
     </Container>
   );
 }

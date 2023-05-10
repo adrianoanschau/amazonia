@@ -142,7 +142,12 @@ export function CalculatorWrapper() {
           >
             <Divider />
             {data.slice(1).map((deliver) => (
-              <ListItem key={uuid()} divider sx={{ display: 'flex', gap: 0.4 }}>
+              <ListItem
+                key={uuid()}
+                divider
+                disablePadding
+                sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.4, py: 2 }}
+              >
                 From{' '}
                 <Chip
                   label={deliver.params.start_on}

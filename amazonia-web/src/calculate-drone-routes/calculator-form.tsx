@@ -10,7 +10,7 @@ import {
   LinearProgress,
   CircularProgress,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { useCalculatorContext } from './context';
 import { useServiceAvailableContext } from '../app-info/context';
 
@@ -36,7 +36,7 @@ const SelectLocationField = styled(
     disabled: boolean;
   }) => (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <InputLabel sx={{ flex: 1 }}>{label}</InputLabel>
+      <InputLabel sx={{ flex: 1, whiteSpace: 'normal' }}>{label}</InputLabel>
       <Autocomplete
         disablePortal
         value={{ label: value }}
@@ -52,6 +52,7 @@ const SelectLocationField = styled(
 )();
 
 export function CalculatorForm() {
+  const theme = useTheme();
   const { loading, available } = useServiceAvailableContext();
   const { formData, deliveryTime, setFormData, onSubmit } =
     useCalculatorContext();
@@ -74,7 +75,16 @@ export function CalculatorForm() {
           sx={{ position: 'absolute', width: '100%', top: -20 }}
         />
       )}
-      <Box sx={{ display: 'flex', gap: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 3,
+          flexDirection: 'column',
+          [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row',
+          },
+        }}
+      >
         <Stack sx={{ flex: 3, gap: 1 }}>
           <SelectLocationField
             label="Drone start"
