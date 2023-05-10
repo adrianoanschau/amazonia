@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import { App } from './app';
 import main from './main';
 

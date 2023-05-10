@@ -1,22 +1,37 @@
-# BUILD
-FROM node:18 AS BUILD
+FROM node:18-alpine AS BUILDER
 
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
-COPY . .
 
+## Install dependencies
+COPY ["./package.json", "./yarn.lock", "/app/"]
+
+RUN yarn --frozen-lockfile
+
+## Add source code
+COPY ["./tsconfig.json", "/app/"]
+COPY "./src" "/app/src/"
+
+## Build
 RUN yarn build
 
+# PRODUCTION IMAGE
 
-# FINAL IMAGE
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
-COPY package.json yarn.lock ./
+
+COPY --from=BUILDER [\
+  "/app/package.json", \
+  "/app/yarn.lock", \
+  "/app/" \
+  ]
+
+COPY --from=BUILDER "/app/build" "/app/build/"
+
+COPY ".env" "/app/"
+
 RUN yarn --frozen-lockfile --production
-COPY . .
-COPY --from=BUILD /app/build .
+
 EXPOSE 8080
 
-CMD [ "node", "build/index.js" ]
+CMD [ "yarn", "start" ]

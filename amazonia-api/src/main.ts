@@ -6,6 +6,8 @@ import { DeliveryTimeRouter } from './routers/delivery-time.router';
 import { DeliveryTimeService } from './services/delivery-time.service';
 
 const main = async function (app: App) {
+  console.log({ DELIVERY_TIMES_API: process.env.DELIVERY_TIMES_API });
+
   const deliveryTimeData = new DeliveryTimeData(
     new HttpClient(process.env.DELIVERY_TIMES_API)
   );
