@@ -1,6 +1,8 @@
 import { Divider, Paper, Typography, TypographyProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { CalculatorForm } from './calculator-form';
+import { CalculatorWrapper } from './calculator-wrapper';
+import { useCalculatorContext, withCalculatorContext } from './context';
+import { useEffect } from 'react';
 
 const Container = styled(Paper)(({ theme }) => ({
   position: 'relative',
@@ -37,14 +39,24 @@ const Drone = styled(() => (
   </figure>
 ))();
 
-export function CalculateDroneRoutes() {
+function CalculateDroneRoutesComponent() {
+  const { formData } = useCalculatorContext();
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   return (
     <Container>
       <Title>Amazonia Drone Route</Title>
       <Wrapper>
-        <CalculatorForm />
+        <CalculatorWrapper />
       </Wrapper>
       <Drone />
     </Container>
   );
 }
+
+export const CalculateDroneRoutes = withCalculatorContext(
+  CalculateDroneRoutesComponent,
+);

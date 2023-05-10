@@ -1,6 +1,6 @@
 import { Container, CssBaseline, ThemeProvider, styled } from '@mui/material';
 import theme from './theme/default';
-import { CalculateDroneRoutes } from './components/calculate-drone-routes';
+import { CalculateDroneRoutes } from './calculate-drone-routes';
 
 const StyledContainer = styled(Container)({
   display: 'flex',
