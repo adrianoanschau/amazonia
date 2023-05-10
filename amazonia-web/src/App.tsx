@@ -1,6 +1,14 @@
-import { Container, CssBaseline, ThemeProvider, styled } from '@mui/material';
+import {
+  Container,
+  CssBaseline,
+  Divider,
+  Stack,
+  ThemeProvider,
+  styled,
+} from '@mui/material';
 import theme from './theme/default';
 import { CalculateDroneRoutes } from './calculate-drone-routes';
+import { AppInfo } from './app-info';
 
 const StyledContainer = styled(Container)({
   display: 'flex',
@@ -15,7 +23,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <StyledContainer maxWidth="sm">
-        <CalculateDroneRoutes />
+        <Stack sx={{ gap: 2 }}>
+          <CalculateDroneRoutes />
+          <Divider sx={{ borderColor: theme.palette.grey[700] }} />
+          <AppInfo />
+        </Stack>
       </StyledContainer>
     </ThemeProvider>
   );
