@@ -4,12 +4,10 @@ import {
   Paper,
   Typography,
   TypographyProps,
-  useMediaQuery,
 } from '@mui/material';
-import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { CalculatorWrapper } from './calculator-wrapper';
-import { useCalculatorContext, withCalculatorContext } from './context';
+import { withCalculatorContext } from './context';
 
 const Container = styled(Paper)(({ theme }) => ({
   position: 'relative',
@@ -68,12 +66,6 @@ const Drone = styled(() => {
 })();
 
 function CalculateDroneRoutesComponent() {
-  const { formData } = useCalculatorContext();
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   return (
     <Container>
       <Drone />
