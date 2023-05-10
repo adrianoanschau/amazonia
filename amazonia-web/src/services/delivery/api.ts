@@ -21,7 +21,7 @@ class DeliveryApi {
 
   constructor() {
     this.#axiosInstance = axios.create({
-      baseURL: '/api',
+      baseURL: 'https://amazonia-api.up.railway.app',
     });
   }
 

@@ -21,7 +21,7 @@ export default ({ mode }) => {
       port: 3000,
       proxy: {
         '/api': {
-          target: process.env.VITE_DELIVERY_API,
+          target: 'https://amazonia-api.up.railway.app',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
