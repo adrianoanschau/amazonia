@@ -1,4 +1,6 @@
 import { createContext, useCallback, useState } from 'react';
+import { useDeliveryTimeData } from '../../services/delivery';
+import { DeliveryTimeData } from '../../services/delivery/api';
 
 type Nullable<T> = T | null;
 
@@ -10,6 +12,11 @@ type FormData = {
 
 type TCalculatorContext = {
   formData: FormData;
+  deliveryTime: {
+    data?: DeliveryTimeData;
+    loading?: boolean;
+    error?: unknown;
+  };
   setFormData: (
     field: 'droneStart' | 'objectPickUp' | 'deliveryDestination',
     data: Nullable<string>,
@@ -22,6 +29,11 @@ export const CalculatorContext = createContext<TCalculatorContext>({
     droneStart: null,
     objectPickUp: null,
     deliveryDestination: null,
+  },
+  deliveryTime: {
+    data: undefined,
+    loading: undefined,
+    error: undefined,
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setFormData: () => {},
@@ -36,6 +48,8 @@ export function CalculatorContextProvider({
   const [objectPickUp, setObjectPickUp] = useState<Nullable<string>>(null);
   const [deliveryDestination, setDeliveryDestination] =
     useState<Nullable<string>>(null);
+
+  const [deliveryTime, loadDeliveryTimeData] = useDeliveryTimeData();
 
   const handleSetFormData = useCallback(
     (
@@ -52,13 +66,20 @@ export function CalculatorContextProvider({
   );
 
   const handleSubmitForCalculate = useCallback(() => {
-    //
-  }, []);
+    if (!droneStart || !objectPickUp || !deliveryDestination) return;
+
+    loadDeliveryTimeData({
+      start_on: droneStart,
+      object_location: objectPickUp,
+      delivery_on: deliveryDestination,
+    });
+  }, [loadDeliveryTimeData, droneStart, objectPickUp, deliveryDestination]);
 
   return (
     <CalculatorContext.Provider
       value={{
         formData: { droneStart, objectPickUp, deliveryDestination },
+        deliveryTime,
         setFormData: handleSetFormData,
         onSubmit: handleSubmitForCalculate,
       }}
