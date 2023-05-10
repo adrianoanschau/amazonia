@@ -57,7 +57,7 @@ export class App {
   private middlewares() {
     this.#application.use(
       cors({
-        origin: 'same-origin',
+        origin: 'https://drone-router.web.app/',
         allowedHeaders: ['Accept', 'Content-Type'],
         methods: ['GET'],
       })
