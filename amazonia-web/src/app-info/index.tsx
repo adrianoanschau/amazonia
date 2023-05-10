@@ -35,7 +35,12 @@ export function AppInfo() {
   }, [loading, error, setAvailable, setLoading]);
 
   return (
-    <Box display="flex" justifyContent="flex-end">
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box>
+        <figure style={{ width: 100, margin: 0 }}>
+          <img src="/logo-white.png" style={{ maxWidth: '100%' }} />
+        </figure>
+      </Box>
       {data && !loading && !error && (
         <AppInfoLabel
           color="success"

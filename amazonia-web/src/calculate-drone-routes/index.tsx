@@ -2,7 +2,7 @@ import { Divider, Paper, Typography, TypographyProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { CalculatorWrapper } from './calculator-wrapper';
 import { useCalculatorContext, withCalculatorContext } from './context';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
 const Container = styled(Paper)(({ theme }) => ({
   position: 'relative',
@@ -18,12 +18,24 @@ const Wrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const Title = styled((props) => (
-  <>
-    <Typography variant="h6" component="h1" {...props} />
-    <Divider sx={{ mt: 1, mb: 2, borderWidth: 2 }} />
-  </>
-))<TypographyProps>();
+const Title = styled(
+  ({ title, subtitle }: { title: string; subtitle: string }) => (
+    <>
+      <Typography variant="h6" component="h1">
+        {title}
+      </Typography>
+      <Typography
+        variant="body2"
+        component="h4"
+        color="text.secondary"
+        fontWeight="bold"
+      >
+        {subtitle}
+      </Typography>
+      <Divider sx={{ mt: 1, mb: 2, borderWidth: 2 }} />
+    </>
+  ),
+)<TypographyProps>();
 
 const Drone = styled(() => (
   <figure
@@ -31,7 +43,7 @@ const Drone = styled(() => (
       width: 220,
       margin: 0,
       position: 'absolute',
-      top: -50,
+      top: -30,
       right: 10,
     }}
   >
@@ -48,7 +60,7 @@ function CalculateDroneRoutesComponent() {
 
   return (
     <Container>
-      <Title>Amazonia Drone Route</Title>
+      <Title title="Amazonia Drone Router" subtitle="by Ateliware" />
       <Wrapper>
         <CalculatorWrapper />
       </Wrapper>
