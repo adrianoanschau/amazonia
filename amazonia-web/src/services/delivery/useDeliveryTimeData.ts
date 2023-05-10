@@ -3,7 +3,7 @@ import { api, DeliveryTimeData, DeliveryTimeQueryData } from './api';
 
 export const useDeliveryTimeData = () => {
   const [data, setData] = useState<DeliveryTimeData>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
   const loadData = useCallback(async (params: DeliveryTimeQueryData) => {
