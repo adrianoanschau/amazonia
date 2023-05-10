@@ -1,6 +1,8 @@
 import { createContext, useCallback, useState } from 'react';
-import { useDeliveryTimeData } from '../../services/delivery';
-import { DeliveryTimeData } from '../../services/delivery/api';
+import {
+  useDeliveryTimeData,
+  DeliveryTimeCalculated,
+} from '../../services/delivery';
 
 type Nullable<T> = T | null;
 
@@ -13,8 +15,8 @@ type FormData = {
 type TCalculatorContext = {
   formData: FormData;
   deliveryTime: {
-    data?: DeliveryTimeData;
-    loading?: boolean;
+    data: DeliveryTimeCalculated[];
+    loading: boolean;
     error?: unknown;
   };
   setFormData: (
@@ -31,8 +33,8 @@ export const CalculatorContext = createContext<TCalculatorContext>({
     deliveryDestination: null,
   },
   deliveryTime: {
-    data: undefined,
-    loading: undefined,
+    data: [],
+    loading: false,
     error: undefined,
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
