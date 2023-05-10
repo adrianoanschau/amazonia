@@ -7,6 +7,7 @@ import express, {
 } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { ValidationError } from 'joi';
 import packageJson from '../package.json';
 
 export class App {
@@ -35,12 +36,22 @@ export class App {
   }
 
   private errorHandler(
-    error: Error,
+    error: Error | ValidationError,
     req: Request,
     res: Response,
     next: NextFunction
   ) {
-    return res.status(500).json({ message: error.message });
+    const response = {
+      status: 500,
+      error: error.name,
+      message: error.message,
+    };
+    if ('details' in error && error.name === 'ValidationError') {
+      response.status = 400;
+      response.message =
+        'Invalid data entry, make sure to submit fields correctly.';
+    }
+    return res.status(response.status).json(response);
   }
 
   private middlewares() {

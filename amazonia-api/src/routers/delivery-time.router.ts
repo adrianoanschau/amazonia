@@ -10,7 +10,7 @@ export class DeliveryTimeRouter {
 
     this.#router.get('/delivery-time', (req, res) => {
       const { error, value } = deliveryTimeSchema.validate(req.query);
-      if (error) throw new Error('Invalid data');
+      if (error) throw error;
 
       res.json(this.service.getBetterRoute(value));
     });

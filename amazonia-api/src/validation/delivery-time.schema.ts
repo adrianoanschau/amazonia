@@ -11,14 +11,14 @@ const locationValues = horizontalLocations
   .map((h) => verticalLocations.map((v) => `${h}${v}`))
   .flat();
 
-export const deliveryTimeSchema = Joi.object<DeliveryTimeRequest>().keys({
+export const deliveryTimeSchema = Joi.object<DeliveryTimeRequest>({
   start_on: Joi.string()
-    .required()
-    .valid(...locationValues),
+    .valid(...locationValues)
+    .required(),
   object_location: Joi.string()
-    .required()
-    .valid(...locationValues),
+    .valid(...locationValues)
+    .required(),
   delivery_on: Joi.string()
-    .required()
-    .valid(...locationValues),
+    .valid(...locationValues)
+    .required(),
 });
