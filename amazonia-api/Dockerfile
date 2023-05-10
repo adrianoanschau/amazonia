@@ -28,7 +28,7 @@ COPY --from=BUILDER [\
 
 COPY --from=BUILDER "/app/build" "/app/build/"
 
-COPY ".env" "/app/"
+# COPY ".env" "/app/"
 
 RUN yarn --frozen-lockfile --production
 
