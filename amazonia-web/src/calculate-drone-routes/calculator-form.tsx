@@ -25,17 +25,19 @@ const options = 'ABCDEFGH'
 
 const SelectLocationField = styled(
   ({
+    id,
     label,
     value,
     onChange,
     disabled,
   }: {
+    id: string;
     label: string;
     value: string;
     onChange: (value: string | null) => void;
     disabled: boolean;
   }) => (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <Box id={id} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
       <InputLabel sx={{ flex: 1, whiteSpace: 'normal' }}>{label}</InputLabel>
       <Autocomplete
         disablePortal
@@ -87,18 +89,21 @@ export function CalculatorForm() {
       >
         <Stack sx={{ flex: 3, gap: 1 }}>
           <SelectLocationField
+            id="drone-start"
             label="Drone start"
             value={formData.droneStart ?? ''}
             onChange={(value) => setFormData('droneStart', value)}
             disabled={!available}
           />
           <SelectLocationField
+            id="object-pick-up"
             label="Object pick-up"
             value={formData.objectPickUp ?? ''}
             onChange={(value) => setFormData('objectPickUp', value)}
             disabled={!available}
           />
           <SelectLocationField
+            id="delivery-destination"
             label="Delivery destination"
             value={formData.deliveryDestination ?? ''}
             onChange={(value) => setFormData('deliveryDestination', value)}
@@ -107,6 +112,7 @@ export function CalculatorForm() {
         </Stack>
         <Stack sx={{ flex: 2, justifyContent: 'flex-end' }}>
           <Button
+            id="calculate-fastest-route"
             variant="contained"
             fullWidth
             sx={{ lineHeight: 1.3 }}
