@@ -2,6 +2,8 @@ import { Box, Chip, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useAppInfo } from '../services/delivery';
 import { Circle } from '@mui/icons-material';
+import { useServiceAvailableContext } from './context';
+import { useEffect } from 'react';
 
 const AppInfoLabel = styled(
   ({
@@ -25,6 +27,12 @@ const AppInfoLabel = styled(
 
 export function AppInfo() {
   const [{ data, loading, error }] = useAppInfo();
+  const { setAvailable, setLoading } = useServiceAvailableContext();
+
+  useEffect(() => {
+    setLoading(loading);
+    setAvailable(!loading && !error);
+  }, [loading, error, setAvailable, setLoading]);
 
   return (
     <Box display="flex" justifyContent="flex-end">
@@ -35,7 +43,7 @@ export function AppInfo() {
         />
       )}
       {loading && !error && (
-        <AppInfoLabel color="warning" label={`Loading Service`} />
+        <AppInfoLabel color="warning" label={`Service is Loading`} />
       )}
       {!loading && !!error && (
         <AppInfoLabel color="error" label={`Service Unavailable`} />
